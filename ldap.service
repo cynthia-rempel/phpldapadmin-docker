@@ -1,0 +1,8 @@
+#!/bin/bash
+
+docker run --rm \
+--name ldap.service \
+--hostname ldap.service \
+--publish 389:389 \
+--publish 636:636 \
+-d osixia/openldap:latest
