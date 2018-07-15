@@ -1,6 +1,9 @@
 # phpldapadmin-docker
 Centos-Based Docker Container
 
+To build it run:
+sudo docker build . -t phpldapadmin:test
+
 To start it run:
 sudo ./ldap.service && sudo ./phpldapadmin.service
 
