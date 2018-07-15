@@ -2,21 +2,29 @@
 Centos-Based Docker Container
 
 To build it run:
+
 sudo docker build . -t phpldapadmin:test
 
 To start it run:
+
 sudo ./ldap.service && sudo ./phpldapadmin.service
 
 To peek inside it run:
+
 sudo docker exec -ti phpldapadmin.service bash
 
 To end it run:
+
 sudo docker kill phpldapadmin.service && sudo docker kill ldap.service
 
 To log into the webpage:
+
 user:
+
 cn=admin,dc=example,dc=org
-password
+
+password:
+
 admin
 
 Note: the LDAP container gotten from following these directions may not persist data across reboots.
