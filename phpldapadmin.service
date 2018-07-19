@@ -1,10 +1,13 @@
 #!/bin/bash
-
-docker run --rm --privileged \
+# 5.10 Ensure memory usage for container is limited
+docker run --rm \
 --name phpldapadmin.service \
 --hostname phpldapadmin.service \
--v /sys/fs/cgroup:/sys/fs/cgroup:ro \
+--volume /sys/fs/cgroup:/sys/fs/cgroup:ro \
 --publish 80:80 \
 --publish 443:443 \
 --link ldap.service:ldap.service \
+--memory 1024m \
+--tmpfs /run \
+--tmpfs /tmp \
 -d  phpldapadmin:test

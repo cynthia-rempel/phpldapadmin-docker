@@ -1,7 +1,7 @@
 FROM centos/systemd
 
 MAINTAINER "Your Name" <you@example.com>
-
+ENV container docker
 EXPOSE 443
 # CIS Docker Community Edition Benchmark
 # 4.7 Ensure update instructions are not use alone in the Dockerfile
@@ -67,5 +67,6 @@ COPY config.php /etc/phpldapadmin/config.php
 # 4.6 Ensure HEALTHCHECK instructions have been added to the container image
 HEALTHCHECK CMD curl --fail --insecure https://localhost/ || exit 1
 RUN systemctl enable httpd.service
+STOPSIGNAL SIGRTMIN+3
 CMD ["/usr/sbin/init"]
 
