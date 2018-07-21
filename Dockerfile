@@ -4,8 +4,6 @@ MAINTAINER "Your Name" <you@example.com>
 ENV container docker
 EXPOSE 443
 
-COPY phpldapadmin.conf httpd.conf config.php ./
-
 # CIS Docker Community Edition Benchmark
 # 4.7 Ensure update instructions are not use alone in the Dockerfile
 # change the document root to point to htdocs and the ssl keys
@@ -36,7 +34,11 @@ RUN yum install epel-release -y && \
     yum -y install mod_ssl openssl && \
     yum -y erase httpd-manual && \
     yum clean all 
-COPY phpldapadmin.conf httpd.conf config.php ssl.conf ./
+COPY phpldapadmin.conf httpd.conf config.php ssl.conf \
+     templates/custom_person.xml \
+     templates/custom_ou.xml \
+     templates/custom_machine.xml \
+     ./
 RUN rm /etc/httpd/conf.modules.d/00-dav.conf && \
     sed '/.*status_module.*/d' -i /etc/httpd/conf.modules.d/00-base.conf && \
     sed '/.*autoindex.*/d' -i /etc/httpd/conf.modules.d/00-base.conf && \
@@ -59,7 +61,12 @@ RUN rm /etc/httpd/conf.modules.d/00-dav.conf && \
     mv phpldapadmin.conf /etc/httpd/conf.d/phpldapadmin.conf && \
     mv httpd.conf /etc/httpd/conf/httpd.conf && \
     mv config.php /etc/phpldapadmin/config.php && \
-    mv ssl.conf /etc/httpd/conf.d/ssl.conf
+    mv ssl.conf /etc/httpd/conf.d/ssl.conf && \
+    rm /usr/share/phpldapadmin/templates/creation/* && \
+    mv custom_person.xml /usr/share/phpldapadmin/templates/creation/ && \
+    mv custom_ou.xml /usr/share/phpldapadmin/templates/creation/ && \
+    mv custom_machine.xml /usr/share/phpldapadmin/templates/creation/
+    
 
 # CIS Docker Community Edition Benchmark
 # 4.6 Ensure HEALTHCHECK instructions have been added to the container image

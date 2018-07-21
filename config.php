@@ -41,9 +41,8 @@
  *********************************************/
 
 /* If you are asked to put PLA in debug mode, this is how you do it: */
-#  $config->custom->debug['level'] = 255;
-#  $config->custom->debug['syslog'] = true;
-#  $config->custom->debug['file'] = '/tmp/pla_debug.log';
+$config->custom->debug['level'] = 64;
+$config->custom->debug['syslog'] = true;
 
 /* phpLDAPadmin can encrypt the content of sensitive cookies if you set this
    to a big random string. */
@@ -96,16 +95,16 @@ $config->custom->session['blowfish'] = '0875c89bca8d19998c73b977664ee566';  # Au
 /* Command availability ; if you don't authorize a command the command
    links will not be shown and the command action will not be permitted.
    For better security, set also ACL in your ldap directory. */
-/*
-$config->custom->commands['cmd'] = array(
+
+/* $config->custom->commands['cmd'] = array(
 	'entry_internal_attributes_show' => true,
-	'entry_refresh' => true,
-	'oslinks' => true,
-	'switch_template' => true
+        'entry_refresh' => true,
+        'oslinks' => true,
+	'entry_refresh' => true
 );
 
 $config->custom->commands['script'] = array(
-	'add_attr_form' => true,
+        'add_attr_form' => true,
 	'add_oclass_form' => true,
 	'add_value_form' => true,
 	'collapse' => true,
@@ -116,20 +115,19 @@ $config->custom->commands['script'] = array(
 	'create' => true,
 	'create_confirm' => true,
 	'delete' => true,
-	'delete_attr' => true,
+        'delete_attr' => true,
 	'delete_form' => true,
 	'draw_tree_node' => true,
 	'expand' => true,
 	'export' => true,
 	'export_form' => true,
-	'import' => true,
 	'import_form' => true,
 	'login' => true,
 	'logout' => true,
 	'login_form' => true,
 	'mass_delete' => true,
 	'mass_edit' => true,
-	'mass_update' => true,
+        'mass_update' => true,
 	'modify_member_form' => true,
 	'monitor' => true,
 	'purge_cache' => true,
@@ -144,29 +142,27 @@ $config->custom->commands['script'] = array(
 	'template_engine' => true,
 	'update_confirm' => true,
 	'update' => true
-);
-*/
+); */
+
 
 /*********************************************
  * Appearance                                *
  *********************************************/
 
-/* If you want to choose the appearance of the tree, specify a class name which
-   inherits from the Tree class. */
-// $config->custom->appearance['tree'] = 'AJAXTree';
-#  $config->custom->appearance['tree'] = 'HTMLTree';
+/* Reduce reliance on AJAX */
+$config->custom->appearance['tree'] = 'HTMLTree';
 
-/* Just show your custom templates. */
-// $config->custom->appearance['custom_templates_only'] = false;
+/* Disable built-in templates */
+$config->custom->appearance['custom_templates_only'] = true;
 
-/* Disable the default template. */
-// $config->custom->appearance['disable_default_template'] = false;
+/* Lock down options from users */
+$config->custom->appearance['disable_default_template'] = true;
 
 /* Hide the warnings for invalid objectClasses/attributes in templates. */
 // $config->custom->appearance['hide_template_warning'] = false;
 
-/* Set to true if you would like to hide header and footer parts. */
-// $config->custom->appearance['minimalMode'] = false;
+/* Hide the version information */
+$config->custom->appearance['minimalMode'] = true;
 
 /* Configure what objects are shown in left hand tree */
 // $config->custom->appearance['tree_filter'] = '(objectclass=*)';
@@ -456,8 +452,8 @@ $servers->setValue('appearance','password_hash','');
 /* The password for the dn above. */
 // $servers->setValue('auto_number','pass',null);
 
-/* Enable anonymous bind login. */
-// $servers->setValue('login','anon_bind',true);
+/* Disable anonymous bind login*/
+$servers->setValue('login','anon_bind',false);
 
 /* Use customized page with prefix when available. */
 #  $servers->setValue('custom','pages_prefix','custom_');
