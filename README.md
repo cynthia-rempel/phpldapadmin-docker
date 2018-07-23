@@ -1,6 +1,8 @@
 # phpldapadmin-docker
 Centos-Based Docker Container
 
+## NOTE: the ports apache listens on are 8080 and 8443, so must be redirected to 80 and 443, as in phpldapadmin.service.  The purpose for changing the ports is to eventually enable there to be a non-root user (not quite there).
+
 To build it run:
 
 sudo docker build . -t phpldapadmin:test
