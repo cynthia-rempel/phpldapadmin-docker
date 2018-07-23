@@ -1,7 +1,10 @@
 FROM centos/systemd
 
 MAINTAINER "Your Name" <you@example.com>
+
+# CIS DOCKER CE v1.1.0 5.4 Ensure privileged containers are not used
 ENV container docker
+
 EXPOSE 443
 
 # CIS Docker Community Edition Benchmark
@@ -65,13 +68,20 @@ RUN rm /etc/httpd/conf.modules.d/00-dav.conf && \
     rm /usr/share/phpldapadmin/templates/creation/* && \
     mv custom_person.xml /usr/share/phpldapadmin/templates/creation/ && \
     mv custom_ou.xml /usr/share/phpldapadmin/templates/creation/ && \
-    mv custom_machine.xml /usr/share/phpldapadmin/templates/creation/
-    
+    mv custom_machine.xml /usr/share/phpldapadmin/templates/creation/ && \
+    sed 's/\;filter\.default\ .*/filter\.default\ \=\ url/' -i /etc/php.ini && \
+    sed 's/\;filter\.default\_flags.*/filter\.default\_flags\ \=\ 0/' -i /etc/php.ini
+    # protect users by only permitting url-type characters
 
 # CIS Docker Community Edition Benchmark
+
 # 4.6 Ensure HEALTHCHECK instructions have been added to the container image
 HEALTHCHECK CMD curl --fail --insecure https://localhost/ || exit 1
+
 RUN systemctl enable httpd.service
+
+# CIS DOCKER CE v1.1.0 5.4 Ensure privileged containers are not used
 STOPSIGNAL SIGRTMIN+3
 CMD ["/usr/sbin/init"]
-
+# run apache as non-root user https://access.redhat.com/solutions/112923
+# location of cert in openldap container is /container/service/slapd/assets/certs/ca.crt
