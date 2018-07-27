@@ -1,6 +1,7 @@
 #!/bin/bash
 
 docker run --rm \
+--env LDAP_TLS_VERIFY_CLIENT=never \
 --name ldap.service \
 --hostname ldap.service \
 --publish 389:389 \
