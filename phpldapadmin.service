@@ -2,13 +2,13 @@
 # 5.10 Ensure memory usage for container is limited
 # redirect port number to number above 1024
 docker run --rm \
---name phpldapadmin.service \
 --hostname phpldapadmin.atomic.local \
---volume /sys/fs/cgroup:/sys/fs/cgroup:ro \
+--link ldap.service:ldap.service \
+--memory 512m \
+--name phpldapadmin.service \
 --publish 80:8080 \
 --publish 443:8443 \
---link ldap.service:ldap.service \
---memory 1024m \
 --tmpfs /run \
 --tmpfs /tmp \
+--volume /sys/fs/cgroup:/sys/fs/cgroup:ro \
 -d  phpldapadmin:test

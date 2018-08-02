@@ -43,6 +43,9 @@ COPY phpldapadmin.conf httpd.conf config.php ssl.conf \
      templates/custom_machine.xml \
      ./
 RUN rm /etc/httpd/conf.modules.d/00-dav.conf && \
+    rm /etc/httpd/conf.modules.d/00-lua.conf && \
+    rm /etc/httpd/conf.modules.d/00-proxy.conf && \
+    rm /etc/httpd/conf.modules.d/01-cgi.conf && \
     sed '/.*status_module.*/d' -i /etc/httpd/conf.modules.d/00-base.conf && \
     sed '/.*autoindex.*/d' -i /etc/httpd/conf.modules.d/00-base.conf && \
     rm /etc/httpd/conf.d/autoindex.conf && \
